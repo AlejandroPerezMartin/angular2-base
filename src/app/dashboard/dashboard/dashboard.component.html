@@ -1,8 +1,53 @@
-<p>
-  dashboard works!
-</p>
-<div>{{ 'HOME.HELLO' | translate }}</div>
-<button mdl-button mdl-button-type="fab" mdl-colored="accent">
-    <mdl-icon>add</mdl-icon>
-  </button>
-<router-outlet></router-outlet>
+<mdl-layout mdl-layout-fixed-header>
+
+  <!-- Header -->
+  <mdl-layout-header>
+    <mdl-layout-header-row>
+      <mdl-layout-title>Dashboard</mdl-layout-title>
+      <mdl-layout-spacer></mdl-layout-spacer>
+      <!-- Navigation. We hide it in small screens. -->
+      <nav class="mdl-navigation mdl-layout--large-screen-only">
+        <a routerLink="/dashboard" class="mdl-navigation__link">Dashboard</a>
+        <a routerLink="/dashboard" class="mdl-navigation__link">Reports</a>
+        <span class="header-profile">
+          <img class="mdl-chip__contact" src="https://4.bp.blogspot.com/-zsbDeAUd8aY/US7F0ta5d9I/AAAAAAAAEKY/UL2AAhHj6J8/s1600/facebook-default-no-profile-pic.jpg">
+          aperez@emergya.com
+          <button mdl-button #profileBtn="mdlButton" (click)="profileSubmenu.toggle($event, profileBtn)" mdl-button-type="icon" mdl-ripple><mdl-icon>arrow_drop_down</mdl-icon></button>
+        <mdl-menu #profileSubmenu="mdlMenu" class="profile-submenu" mdl-menu-position="bottom-right">
+          <mdl-menu-item routerLink="/dashboard" mdl-ripple>My profile</mdl-menu-item>
+          <mdl-menu-item routerLink="/dashboard" mdl-ripple mdl-menu-item-full-bleed-divider>Settings</mdl-menu-item>
+          <mdl-menu-item routerLink="/login" mdl-ripple>Logout</mdl-menu-item>
+        </mdl-menu>
+        </span>
+
+      </nav>
+    </mdl-layout-header-row>
+  </mdl-layout-header>
+
+  <!-- Side menu -->
+  <mdl-layout-drawer>
+    <mdl-layout-title>Menu</mdl-layout-title>
+    <nav class="mdl-navigation">
+      <a class="mdl-navigation__link" routerLink="/dashboard" routerLinkActive="router-link-active">
+        <mdl-icon>dashboard</mdl-icon> Dashboard</a>
+      <a class="mdl-navigation__link" routerLink="/dashboard" routerLinkActive="router-link-active">
+        <mdl-icon>work</mdl-icon> Projects</a>
+      <a class="mdl-navigation__link" routerLink="/dashboard" routerLinkActive="router-link-active">
+        <mdl-icon>equalizer</mdl-icon> Reports</a>
+      <a class="mdl-navigation__link" routerLink="/dashboard" routerLinkActive="router-link-active">
+        <mdl-icon>person</mdl-icon> Profile</a>
+      <hr>
+      <a class="mdl-navigation__link" routerLink="/login" routerLinkActive="router-link-active">
+        <mdl-icon>exit_to_app</mdl-icon> Logout</a>
+    </nav>
+  </mdl-layout-drawer>
+
+  <!-- Main content -->
+  <mdl-layout-content>
+    <router-outlet></router-outlet>
+  </mdl-layout-content>
+
+  <!-- Footer -->
+  <app-footer></app-footer>
+
+</mdl-layout>

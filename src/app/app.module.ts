@@ -7,6 +7,10 @@ import { HttpModule } from '@angular/http';
 import { SharedModule } from './shared/shared.module';
 import { TranslationModule } from './app.translation';
 
+// Services
+import { HttpClient } from './_services/http-client';
+import { AuthService } from './_services/auth.service';
+
 // Feature modules
 import { DashboardModule } from './dashboard/dashboard.module';
 
@@ -31,7 +35,10 @@ import { LoginComponent } from './login/login.component';
     AppComponent,
     LoginComponent
   ],
-  providers: [],
+  providers: [
+    HttpClient,
+    AuthService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

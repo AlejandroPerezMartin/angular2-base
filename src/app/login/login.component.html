@@ -1,6 +1,22 @@
-<p>
-  login works!
-</p>
-<button mdl-button mdl-button-type="fab" mdl-colored="accent">
-    <mdl-icon>add</mdl-icon>
-  </button>
+<div class="mdl-layout">
+  <main class="mdl-layout__content">
+    <mdl-card class="login-box" mdl-shadow="6">
+      <mdl-card-title>
+        <mdl-icon>account_circle</mdl-icon>
+        <h2 mdl-card-title-text>Login</h2>
+      </mdl-card-title>
+      <mdl-card-supporting-text>
+        <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+          <mdl-textfield type="email" name="email" label="Email" [(ngModel)]="email" autocomplete="email" pattern="/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"
+            floating-label autofocus></mdl-textfield>
+          <mdl-textfield type="password" name="password" label="Pasword" [(ngModel)]="password" autocomplete="password" floating-label></mdl-textfield>
+        </form>
+      </mdl-card-supporting-text>
+      <mdl-card-actions mdl-card-border>
+        <button [disabled]="loginForm.invalid || loading" (click)="onSubmit()" type="submit" mdl-button mdl-colored="primary" mdl-ripple>Login</button>
+        <button routerLink="/dashboard" mdl-button mdl-colored mdl-ripple>Dashboard</button>
+      </mdl-card-actions>
+      <mdl-progress [indeterminate]="loading"></mdl-progress>
+    </mdl-card>
+  </main>
+</div>
