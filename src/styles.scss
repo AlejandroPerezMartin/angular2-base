@@ -3,6 +3,10 @@
 // Material design lite
 @import '~angular2-mdl/scss/material-design-lite';
 
+@import '~@angular2-mdl-ext/popover/popover';
+@import '~@angular2-mdl-ext/select/select';
+@import '~@angular2-mdl-ext/expansion-panel/expansion-panel';
+
 // Header menu fix
 .profile-submenu .mdl-menu__container.is-visible {
   right: 40px !important;

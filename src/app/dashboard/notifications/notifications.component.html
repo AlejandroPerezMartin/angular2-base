@@ -1,0 +1,77 @@
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--6-col mdl-cell--3-offset">
+
+    <h3>Email notifications</h3>
+
+    <!-- No emails -->
+    <div [hidden]="notificationEmails$">
+      <p>No notification emails configured yet!</p>
+    </div>
+
+    <!-- There are emails -->
+    <div *ngIf="notificationEmails$">
+
+      <p>
+        <button (click)="notificationEmailDialog.show()" #createNotificationEmailBtn mdl-button mdl-button-type="raised" mdl-colored="primary"
+          mdl-ripple>
+          New email <mdl-icon>add</mdl-icon>
+        </button>
+      </p>
+
+      <!-- List of emails -->
+      <mdl-expansion-panel-group #panelGroup>
+        <mdl-expansion-panel #panel *ngFor="let notification of notificationEmails$; let index = index;">
+
+          <mdl-expansion-panel-header>
+            <mdl-expansion-panel-header-list-content>{{index}}#{{notification.id}}</mdl-expansion-panel-header-list-content>
+            <mdl-expansion-panel-header-secondary-content>{{notification.email}}</mdl-expansion-panel-header-secondary-content>
+          </mdl-expansion-panel-header>
+
+          <mdl-expansion-panel-content>
+            <form #editNotificationEmailForm="ngForm">
+
+              <mdl-expansion-panel-body>
+                <p>Edit this user email to receive notifications:</p>
+                <mdl-textfield name="email" type="email" label="Email" [(ngModel)]="notificationEmails$[index].email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                  error-msg="Email should end with @emergya.com" floating-label autofocus required></mdl-textfield>
+              </mdl-expansion-panel-body>
+
+              <mdl-expansion-panel-footer>
+                <mdl-button (click)="onDeleteNotificationEmail(notification, index)">Delete
+                  <mdl-icon>delete</mdl-icon>
+                </mdl-button>
+                <mdl-button (click)="panel.collapse()">Cancel</mdl-button>
+                <mdl-button type="submit" mdl-colored="primary" [disabled]="editNotificationEmailForm.invalid || editNotificationEmailForm.pristine || !notificationEmails$[index].email"
+                  (click)="onUpdateNotificationEmail(notification, index)">Save</mdl-button>
+              </mdl-expansion-panel-footer>
+
+            </form>
+          </mdl-expansion-panel-content>
+
+        </mdl-expansion-panel>
+      </mdl-expansion-panel-group>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- Create notification email dialog -->
+<mdl-dialog #notificationEmailDialog [mdl-dialog-config]="{
+              clickOutsideToClose: true,
+              styles:{'width': '300px'},
+              isModal:true,
+              openFrom: createNotificationEmailBtn,
+              enterTransitionDuration: 300,
+              leaveTransitionDuration: 300}" (show)="onDialogShow(dialogRef)" (hide)="onDialogHide()">
+  <h3 class="mdl-dialog__title">Add email</h3>
+  <div class="mdl-dialog__content">
+      <mdl-textfield name="newEmail" type="email" label="Email" [(ngModel)]="newEmail" error-msg="Email should end with @emergya.com"
+        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" floating-label autofocus></mdl-textfield>
+  </div>
+  <div class="mdl-dialog__actions">
+    <button mdl-button [disabled]="!newEmail" (click)="onCreateNotificationEmail(newEmail)" mdl-button-type="raised"
+      mdl-colored="primary" mdl-ripple>Save</button>
+    <button mdl-button (click)="notificationEmailDialog.close()" mdl-ripple>Cancel</button>
+  </div>
+</mdl-dialog>

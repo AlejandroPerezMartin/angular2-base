@@ -3,11 +3,18 @@ import { RouterModule, Routes } from '@angular/router';
 
 // Components
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { MainComponent } from './main/main.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
-const routes: Routes = [
-  { path: 'dashboard', pathMatch: 'full', redirectTo: 'dashboard' },
-  { path: 'dashboard', component: DashboardComponent },
-];
+const routes: Routes = [{
+  path: 'dashboard',
+  component: DashboardComponent,
+  children: [
+    { path: '', redirectTo: 'main', pathMatch: 'full' },
+    { path: 'main', component: MainComponent },
+    { path: 'notifications', component: NotificationsComponent },
+  ]
+}];
 
 @NgModule({
   imports: [

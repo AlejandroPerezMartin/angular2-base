@@ -1,22 +1,29 @@
-/**
- * HTTP Client Service to handle requests. Is a wrapper of Angular's core http
- * native http module
- */
-
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
 import { Http, Headers, RequestOptions, URLSearchParams, Response } from '@angular/http';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
+
+/**
+ * HTTP Client Service to handle requests. Is a wrapper of Angular's core http
+ * native http module
+ */
 @Injectable()
 export class HttpClient {
 
   private API_URL: string = environment.apiUrl;
+  private token: string;
   public headers: Headers = new Headers();
   public params: URLSearchParams = new URLSearchParams();
-  public options: RequestOptions = new RequestOptions({ headers: this.headers, withCredentials: true });
+  public options: RequestOptions = new RequestOptions({ headers: this.headers, withCredentials: false });
 
-  constructor(private http: Http, private translateService: TranslateService) { }
+  constructor(private http: Http, private translateService: TranslateService) {
+    this.token = localStorage.getItem('auth_token') as string;
+    this.headers.append('Content-Type', 'application/json');
+  }
 
   /**
    * Performs a HTTP GET request to the provided endpoint
@@ -24,7 +31,7 @@ export class HttpClient {
    * @param [options] Request options to be included in the request (overrides default options)
    */
   get(url: string, options?: RequestOptions): Observable<any> {
-    return this.http.get(`${this.API_URL}/${url}`, this.getHeaders(options))
+    return this.http.get(`${this.API_URL}/${url}`, this.getHeaders())
       .map(this.handleData)
       .catch(this.handleError);
   }
@@ -48,7 +55,7 @@ export class HttpClient {
    * @param [options] Request options to be included in the request (overrides default options)
    */
   put(url: string, body: any, options?: RequestOptions): Observable<any> {
-    return this.http.put(`${this.API_URL}/${url}`, body, options || this.getHeaders())
+    return this.http.put(`${this.API_URL}/${url}`, body, this.getHeaders())
       .map(this.handleData)
       .catch(this.handleError);
   }
@@ -77,18 +84,22 @@ export class HttpClient {
   }
 
   /**
-   *
-   * @param options
+   * Return default headers or provided ones
+   * @param options Custom request options object
    */
   public getHeaders(options?: RequestOptions): RequestOptions {
     if (options || options === null) {
       return options;
     }
-    return new RequestOptions({
-      search: this.params,
-      headers: new Headers({}),
-      withCredentials: true
-    });
+    const token = this.getToken();
+    if (token) {
+      return new RequestOptions({
+        search: this.params,
+        headers: new Headers({'Authorization': token}),
+        withCredentials: true
+      });
+    }
+    return this.options;
   }
 
   /**
@@ -97,7 +108,7 @@ export class HttpClient {
    */
   private handleData(response: Response) {
     const body = response.json();
-    return body.data || {};
+    return body || {};
   }
 
   /**
@@ -107,13 +118,18 @@ export class HttpClient {
   private handleError(error: Response | any) {
     let errMsg: string;
     if (error instanceof Response) {
-      const body = error.json() || '';
-      const err = body.error || JSON.stringify(body);
-      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+      errMsg = error.json();
     } else {
       errMsg = error.message ? error.message : error.toString();
     }
-    console.error(errMsg);
     return Observable.throw(errMsg);
   }
+
+  /**
+   * Returns token to be added in every server request
+   */
+  private getToken() {
+    return localStorage.getItem('auth_token') || null;
+  }
+
 }

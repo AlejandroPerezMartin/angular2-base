@@ -21,6 +21,9 @@ import { AppRoutingModule } from './app.router';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 
+// Guards
+import { AuthGuard } from './_guards/auth_guard';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -37,6 +40,7 @@ import { LoginComponent } from './login/login.component';
   ],
   providers: [
     HttpClient,
+    AuthGuard,
     AuthService
   ],
   bootstrap: [AppComponent]

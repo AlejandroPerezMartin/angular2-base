@@ -7,14 +7,14 @@
       </mdl-card-title>
       <mdl-card-supporting-text>
         <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
-          <mdl-textfield type="email" name="email" label="Email" [(ngModel)]="email" autocomplete="email" pattern="/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"
-            floating-label autofocus></mdl-textfield>
-          <mdl-textfield type="password" name="password" label="Pasword" [(ngModel)]="password" autocomplete="password" floating-label></mdl-textfield>
+          <mdl-textfield type="email" name="email" label="Email" [(ngModel)]="formData.email" autocomplete="email" floating-label autofocus></mdl-textfield>
+          <mdl-textfield type="password" name="password" label="Pasword" [(ngModel)]="formData.password" autocomplete="password" floating-label></mdl-textfield>
         </form>
       </mdl-card-supporting-text>
       <mdl-card-actions mdl-card-border>
         <button [disabled]="loginForm.invalid || loading" (click)="onSubmit()" type="submit" mdl-button mdl-colored="primary" mdl-ripple>Login</button>
         <button routerLink="/dashboard" mdl-button mdl-colored mdl-ripple>Dashboard</button>
+        <a href="{{googleLoginUrl}}" title="Google Login">Google login</a>
       </mdl-card-actions>
       <mdl-progress [indeterminate]="loading"></mdl-progress>
     </mdl-card>

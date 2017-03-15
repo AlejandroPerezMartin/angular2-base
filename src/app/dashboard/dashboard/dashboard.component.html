@@ -1,4 +1,4 @@
-<mdl-layout mdl-layout-fixed-header>
+<mdl-layout mdl-layout-fixed-header #layoutDashboard="mdlLayout">
 
   <!-- Header -->
   <mdl-layout-header>
@@ -36,6 +36,8 @@
         <mdl-icon>equalizer</mdl-icon> Reports</a>
       <a class="mdl-navigation__link" routerLink="/dashboard" routerLinkActive="router-link-active">
         <mdl-icon>person</mdl-icon> Profile</a>
+      <a class="mdl-navigation__link" [routerLink]="['/dashboard/notifications']" routerLinkActive="router-link-active">
+        <mdl-icon>notifications</mdl-icon> Notifications</a>
       <hr>
       <a class="mdl-navigation__link" routerLink="/login" routerLinkActive="router-link-active">
         <mdl-icon>exit_to_app</mdl-icon> Logout</a>
@@ -45,9 +47,9 @@
   <!-- Main content -->
   <mdl-layout-content>
     <router-outlet></router-outlet>
-  </mdl-layout-content>
 
-  <!-- Footer -->
-  <app-footer></app-footer>
+    <!-- Footer -->
+    <app-footer></app-footer>
+  </mdl-layout-content>
 
 </mdl-layout>

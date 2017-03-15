@@ -14,8 +14,8 @@
       left: 50%;
       position: absolute;
       top: 50%;
-      -webkit-transform: translate3d(-50%, -50%, 0);
-      transform: translate3d(-50%, -50%, 0);
+      margin-top: -32px;
+      margin-left: -32px;
     }
 
     @-webkit-keyframes rotator {
@@ -107,6 +107,9 @@
     </svg>
   </app-root>
   <dialog-outlet></dialog-outlet>
+
+  <script src="../node_modules/chart.js/dist/Chart.min.js"></script>
+  <script src="../node_modules/chart.js/dist/Chart.bundle.min.js"></script>
 </body>
 
 </html>

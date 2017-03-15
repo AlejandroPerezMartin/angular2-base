@@ -1,0 +1,25 @@
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--12-col">
+
+    <mdl-card mdl-shadow="2">
+      <mdl-card-title>
+        <h2 mdl-card-title-text>My chart</h2>
+      </mdl-card-title>
+      <mdl-card-supporting-text>
+        <div style="display: block">
+          <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
+            [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+        </div>
+        <button (click)="randomize()" mdl-button mdl-button-type="mini-fab" mdl-colored="primary" mdl-ripple>
+          <mdl-icon>autorenew</mdl-icon>
+        </button>
+      </mdl-card-supporting-text>
+      <mdl-card-menu>
+        <button mdl-button mdl-button-type="icon" mdl-ripple>
+        <mdl-icon>share</mdl-icon>
+      </button>
+      </mdl-card-menu>
+    </mdl-card>
+
+  </div>
+</div>

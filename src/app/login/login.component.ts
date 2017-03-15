@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { environment } from '../../environments/environment';
+import { AuthService } from '../_services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -8,21 +10,27 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  private email;
-  private password;
+  private formData: any = {};
+
+  private googleAuth = environment.googleAuth;
+
+  private googleLoginUrl: string = encodeURI(`${this.googleAuth.url}?scope=${this.googleAuth.scope}&redirect_uri=${this.googleAuth.callbackUrl}&response_type=token&client_id=${this.googleAuth.clientId}`)
 
   private loading = false;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   onSubmit() {
     this.loading = true;
-    setTimeout(() => {
-      this.router.navigate(['/dashboard']);
-    }, 2000);
+
+    this.authService.adminLogin(this.formData)
+    .subscribe(
+      res => {
+        console.log(res);
+        this.router.navigate(['/dashboard']);
+      }, err => this.loading = false);
   }
 
 }
