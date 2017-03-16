@@ -1,6 +1,6 @@
 # SistemasInformacion
 
-[![Dependencies](https://david-dm.org/AlejandroPerezMartin/angular2-base.svg)]
+![Dependencies](https://david-dm.org/AlejandroPerezMartin/angular2-base.svg)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0-rc.1.
 
