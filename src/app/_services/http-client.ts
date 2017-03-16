@@ -106,7 +106,7 @@ export class HttpClient {
    * Default response handler for http requests
    * @param response Server response data
    */
-  private handleData(response: Response) {
+  public handleData(response: Response) {
     const body = response.json();
     return body || {};
   }
@@ -115,7 +115,7 @@ export class HttpClient {
    * Default error handler for http requests
    * @param error Error returned by the server
    */
-  private handleError(error: Response | any) {
+  public handleError(error: Response | any) {
     let errMsg: string;
     if (error instanceof Response) {
       errMsg = error.json();

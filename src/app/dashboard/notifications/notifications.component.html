@@ -23,7 +23,7 @@
         <mdl-expansion-panel #panel *ngFor="let notification of notificationEmails$; let index = index;">
 
           <mdl-expansion-panel-header>
-            <mdl-expansion-panel-header-list-content>{{index}}#{{notification.id}}</mdl-expansion-panel-header-list-content>
+            <mdl-expansion-panel-header-list-content>#{{notification.id}}</mdl-expansion-panel-header-list-content>
             <mdl-expansion-panel-header-secondary-content>{{notification.email}}</mdl-expansion-panel-header-secondary-content>
           </mdl-expansion-panel-header>
 
@@ -66,12 +66,14 @@
               leaveTransitionDuration: 300}" (show)="onDialogShow(dialogRef)" (hide)="onDialogHide()">
   <h3 class="mdl-dialog__title">Add email</h3>
   <div class="mdl-dialog__content">
+      <p>This email address will now receive email notifications.</p>
       <mdl-textfield name="newEmail" type="email" label="Email" [(ngModel)]="newEmail" error-msg="Email should end with @emergya.com"
         pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" floating-label autofocus></mdl-textfield>
   </div>
   <div class="mdl-dialog__actions">
-    <button mdl-button [disabled]="!newEmail" (click)="onCreateNotificationEmail(newEmail)" mdl-button-type="raised"
+    <button mdl-button [disabled]="!newEmail || loading" (click)="onCreateNotificationEmail(newEmail)" mdl-button-type="raised"
       mdl-colored="primary" mdl-ripple>Save</button>
     <button mdl-button (click)="notificationEmailDialog.close()" mdl-ripple>Cancel</button>
+    <mdl-spinner single-color [active]="loading"></mdl-spinner>
   </div>
 </mdl-dialog>

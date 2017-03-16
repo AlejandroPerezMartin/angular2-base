@@ -1,3 +1,6 @@
+/**
+ * Admin user interface
+ */
 export interface AdminUser {
   id: number;
   name: string;

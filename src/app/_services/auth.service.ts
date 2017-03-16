@@ -26,7 +26,7 @@ export class AuthService {
    * @param {string} data.email - User email
    * @param {string} data.password - User password
    */
-  adminLogin(data: any): Observable<any> {
+  login(data: any): Observable<any> {
     const observer = new Observable(obs => {
       this.httpClient.post('login/do', data)
         .subscribe(res => {
@@ -42,6 +42,16 @@ export class AuthService {
         });
     });
     return observer;
+  }
+
+  /**
+   * Fetch user's Google profile information
+   * @param token Google OAuth2 token
+   */
+  getGoogleUserInfo(token: string): Observable<any> {
+    return this.http.get(`${environment.googleAuth.userInfoUrl}?alt=json&access_token=${token}`)
+    .map(this.httpClient.handleData)
+    .catch(this.httpClient.handleError);
   }
 
   /**

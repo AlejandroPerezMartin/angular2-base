@@ -14,6 +14,7 @@ export class NotificationsComponent implements OnInit {
 
   private notificationEmails$: Array<NotificationEmail>;
   private newEmail: string;
+  private loading = false;
 
   @ViewChild('notificationEmailDialog') notificationEmailDialog: MdlDialogComponent;
   @ViewChild('panelGroup') panelGroup: MdlExpansionPanelGroupComponent;
@@ -49,6 +50,7 @@ export class NotificationsComponent implements OnInit {
    * @param panelIndex Index of the notification email within the notifications array
    */
   onDeleteNotificationEmail(notificationEmail: NotificationEmail, panelIndex: number) {
+
     // Confirmation prompt
     const prompt = this.dialogService.confirm('Are you sure you want to delete this email?', 'No', 'Yes', 'Delete email');
 
@@ -65,18 +67,23 @@ export class NotificationsComponent implements OnInit {
   }
 
   /**
-   * Adds an email to the list of notifications recipient
+   * Adds an email to the list of notification recipients
    * @param email Email to which activate notifications on
    */
   onCreateNotificationEmail(email: string) {
+    this.loading = true;
     this.notificationService.createEmailsNotifications(email)
       .subscribe(
       res => {
         this.notificationEmails$.push(res.result);
         this.notificationEmailDialog.close();
+        this.loading = false;
         this.mdlSnackbarService.showToast('User added successfully');
       },
-      err => this.mdlSnackbarService.showToast(err.result));
+      err => {
+        this.loading = true;
+        this.mdlSnackbarService.showToast(err.result);
+      });
   }
 
   /**
@@ -90,13 +97,13 @@ export class NotificationsComponent implements OnInit {
     }
   }
 
-  onDialogShow() { }
-
   /**
    * Reset newEmail field on dialog hide
    */
   onDialogHide() {
     this.newEmail = '';
   }
+
+  onDialogShow() { }
 
 }

@@ -28,7 +28,7 @@ export class NotificationService {
 
   /**
    * Deletes an email from the email notifications list
-   * @param {number} id - Email ID to be deleted
+   * @param {number} id Email ID to delete
    */
   deleteEmailsNotifications(id: number) {
     return this.httpClient.delete(`notifications/deleteEmailNotifications/${id}`);
